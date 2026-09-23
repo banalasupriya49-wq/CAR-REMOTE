@@ -1,0 +1,34 @@
+// Motor Driver Pins
+const int motorLeftFwd = 5;
+const int motorLeftRev = 6;
+const int motorRightFwd = 9;
+const int motorRightRev = 10;
+
+void setup() {
+  Serial.begin(9600); // Start Bluetooth communication
+  pinMode(motorLeftFwd, OUTPUT);
+  pinMode(motorLeftRev, OUTPUT);
+  pinMode(motorRightFwd, OUTPUT);
+  pinMode(motorRightRev, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char command = Serial.read(); // Read remote command
+
+    if (command == 'F') {       // Move Forward
+      digitalWrite(motorLeftFwd, HIGH);
+      digitalWrite(motorRightFwd, HIGH);
+    } 
+    else if (command == 'B') {  // Move Backward
+      digitalWrite(motorLeftRev, HIGH);
+      digitalWrite(motorRightRev, HIGH);
+    } 
+    else if (command == 'S') {  // Stop
+      digitalWrite(motorLeftFwd, LOW);
+      digitalWrite(motorLeftRev, LOW);
+      digitalWrite(motorRightFwd, LOW);
+      digitalWrite(motorRightRev, LOW);
+    }
+  }
+}
